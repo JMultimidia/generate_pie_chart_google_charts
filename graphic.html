@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Sample chart with local data</title>
+
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+	<script type="text/javascript">
+		google.load('visualization', '1.0', { 'packages': ['corechart'] });
+		google.setOnLoadCallback(function () {
+			var json_text = $.ajax({ url: "getGraphicData.php", dataType: "json", async: false }).responseText;
+			var json = eval("(" + json_text + ")");
+			var dados = new google.visualization.DataTable(json.dados);
+
+			var chart = new google.visualization.PieChart(document.getElementById('area_graphic'));
+			chart.draw(dados, json.config);
+		});
+	</script>
+</head>
+
+<body>
+	<div id="area_graphic"></div>
+</body>
+
+</html>
